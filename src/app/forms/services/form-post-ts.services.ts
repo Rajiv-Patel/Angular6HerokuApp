@@ -1,71 +1,210 @@
-////20.00 making post call, whole page. Video Time starts 1:27:25
-import {Injectable} from '@angular/core'; 
-import{Http,Headers,Response,RequestOptions} from '@angular/http'; //we need http in our main app module also 
-import { EmployeeForOrderForm} from '../models/employee.inteface-models'; //our data type for form
-//import {Observable} from 'rxjs/Observable'; //20.1.5
-import { Observable } from 'rxjs'; //20.1.5
-import {map} from 'rxjs/operators';
-import 'rxjs/rx'; //RX will get .map,.catch 
+//21 Creating ReactiveForm 
+import {Component, OnInit} from '@angular/core';
+import {FormGroup, FormControl,} from '@angular/forms'; //21 New Things Required 
+import {FormBuilder} from '@angular/forms'; //21.1 New Things Required 
+import {Validators} from '@angular/forms'; //21.4 New Things Required 
+import {AbstractControl} from '@angular/forms';//21.6
+import {ValidatorFn} from '@angular/forms';//21.8 //it will make more dynamic 
+import {FormArray} from '@angular/forms'; //22.1
+import {debounceTime} from 'rxjs/operators';
 
+//To avoid making an object for every individual form field of our FormGroup which is bulky and heavy, 
+//we will import FormBuilder //21.1
+//import {Customer} from '../interface-customer';//21
+import { Customer } from './interface-customer';//21
 
-@Injectable()
+//21.6 Custome Function for Only Rating Field
+//you can write seprate .js function file and import that as well. make it re-usable
+//use of function, must need AbstractControl (is part of form), Import aboveas as well
+function rattingRange(cVar:AbstractControl):{[key:string]:boolean}|null{ //21.6
+    //cVar using dataTypeof AbstCtl:{key:dataWeGet or GetABoolean} 
+    //take the value and return key value pair (either true or false) else nothing null
+    //if my function returns something I have to play with that else return me null . 
+    if(cVar.value != undefined && (isNaN(cVar.value) ||cVar.value < 1 || cVar.value > 5)){
+    //CVar(userInput).value != empty  && (notnumber(UserInput) || value<1 || value>5 )
+    //if condition is satisfye when user sends input then 
+        return{'Rajrange':true}//'mykeyName(range):true'below return true
+        ////21.7 Rajrange in HTML show true for validation
+    };
+    return null //else it will return null
+}   
 
-export class RajFormPostData{  //declar into product mod. 
-
-    constructor(private http:Http){    
-    }
-            ////20.1.6 our API seed has some Res:Response in the body 
-            private extractData(res:Response){
-                let body = res.json();
-                return body.fields || { }  
-                //my API JSON returs fields || iw ill pass {nothing}
-            }
-            
-            ////20.1.7
-            private handleError(error:any){
-                return Observable.throw(error.statusText)// statusText like 400,501,300 error code        
-                //return Observable.throw(error)  
-            }
-
-    //20.1.1 my_method(who will receive data)//recevie by employee data from employee
-    //postEmployeeMsg2 is for test purpose to see if data is coming in console. 
-    postEmployeeMsg2(EmployeeForOrderForm:EmployeeForOrderForm){ //Relate to 20.1.4c
-        //just to check if we are receviing data or not? chekc on console than post to my API
-        console.log("Msg2:Rajiv Posting Data In Using Service Modual",EmployeeForOrderForm)
-        //now basic services is done, lets move to below remove this method. 
-    }
-
-    //Msg2 is confirmed that we are receving the data so now make a post call using below. 
-    //Below var having issue with Http land not showing anythign in the :3100 port. 
-    //Relate to 20.1.4c
-    postEmployeeMsg1(EmployeeForOrderForm:EmployeeForOrderForm):Observable<any>{ //20.1.8 Observable<any>
-    //console.log("Msg1:Using Post() to Send Data Using Services ",EmployeeForOrderForm)//show usering services 
-        
-        let body = JSON.stringify(EmployeeForOrderForm); 
-        //body has the data = conver to JSON.stringiyf(receving data/datatype of our form)
-        
-        let headers = new Headers({'Content-Type': 'application/json'});
-        //creating new Headers(pass your data type : json or text etc..)//Content-Type is a header in our API
-        
-        let options = new RequestOptions({headers:headers});//what ever you are passing to API 
-        //RequestOptions(we can pass login, password.key or text as needed for our API) 
-        //Our seed API is simple no pass etc, so jsut content type and data type JSON. 
-
-        //http call using .post(URL,body(data),Options ) 
-        //makeLinkToAccess?id to use direct ID to work with data
-        return this.http.post('http://localhost:3100/makeLinkToAccess',body,options).map(this.extractData).catch(this.handleError) // Access/${id}',body
-        //you can use http.delete, http.add more options to paly with API
-
-          //20.1.6
-          //20.1.7
-        }
+//some input field we need 1 to 5 and/or another 50 to 30 then we use as more generic funnction 
+//21.8 How to make it more generic, wrap function(21.7) inside another function, 
+function rattingRange2(min:number,max:number):ValidatorFn{ //import ValidatorFn is function
+                    //passing min & max parameters when declaring function at 21.9
+    //function srattingRange2, using fat erro as function returing value 
+    return (cVar:AbstractControl):{[key:string]:boolean}|null => {   //Using ES6 Fat Erro Func. 
+        if(cVar.value != undefined && (isNaN(cVar.value) ||cVar.value < min || cVar.value > max)){
+        //CVar(userInput).value != empty  && (notnumber(UserInput) || value<1 || value>5 )
+        //if condition is satisfye when user sends input then 
+            return{'Rajrange2':true}//'mykeyName(range):true'below return true
+            ////21.7 Rajrange in HTML show true for validation
+        };
+        return null //else it will return null
+    } 
 }
 
-    /*
-    this.http.post(url, body, options).map((res:Response) => res.json()).subscribe(
-                     data => { response = data },
-                     err => console.error(err),
-                     () => { console.log(response) });
-    */
+//21.10 Video 1:30:00 1:36:00 Video Explain  https://scotch.io/@ibrahimalsurkhi/match-password-validation-with-angular-2
+function RajemailMatcher(dVar:AbstractControl){  //email validation 
+    let emailControl = dVar.get('Email');
+    let confrimControl = dVar.get('EmailConfirm');
+    //let SetconfrimControl = dVar.setValue('EmailConfirm');
+
+    if(emailControl.pristine || confrimControl.pristine){
+        return null;
+    }
+    if(emailControl.value === confrimControl.value){
+        return null;
+    }
+        return {'Rajmatch':true}
+}
+
+@Component({
+    templateUrl:'./order-reactive-form-html.component.html'
+})
+export class RajReactiveform2OrderComponent{
+    title="Reactive Form"  //our Header Title Variable to Display in HTML 
+    RajcustomerForm:FormGroup; //making an object of RajcustomerForm
+    //below interface Customer data type and assigned to Rajcustomer 
+    Rajcustomer:Customer = new Customer();  
+    showAddress:false; //22.1
+    emailMessage:string; ///22.3
+
+    get addresses(): FormArray{ ////22.1
+        return <FormArray>this.RajcustomerForm.get('addresses');
+    }
+
+    private validationMessage = {////////22.3
+        required:'Please enter your email address',
+        pattern:'Please enter a valid email'
+    }
+
+    ////21.2 First we will make an object of FormBuilder
+    constructor(private RajFormBuilder:FormBuilder){};
+    
+    ngOnInit():void{  //50:55 watch 
+        /*
+        //below is making an object for every Form Filed to avoid we use 21.3
+        this.RajcustomerForm = new FormGroup({   
+            //writting our Field Names which are used in the form
+            firstName:new FormControl("Test Value 1"),//default value 
+            lastName:new FormControl("Test Value 2"),//default value 
+            phone:new FormControl("Test Value 3")//default value 
+        })
+    }*/
+
+    //21.3 Using an object of FormBuilder we will make .group(all input field)
+        this.RajcustomerForm = this.RajFormBuilder.group({   
+            //firstName:{value:"n/a",disabled:true}, 
+            firstName:["",[
+                Validators.required,  //must required
+                Validators.minLength(3), //min length must be 3 char
+                Validators.maxLength(5)]],//max length less <= 5 char 
+            //default value or validation condition
+            
+            //One Step Validation uisng requried only 
+            lastName:["",Validators.required],//21.4 default value in HTML page 
+
+    //21.10 Grouping Email and Child Email (confirmEmail)
+            RajEmailGroup:this.RajFormBuilder.group({
+                    //two Step Validation uisng requried & minLength only 
+                    Email:["",[
+                        Validators.required,
+                        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9._]+')]],//https://regexr.com/39tc1
+                    EmailConfirm:["",[Validators.required,
+                                    /*Validators.pattern('[a-z0-9._%+-]+@[a-z0-9._]+')*/]
+                ],
+            },{validator:RajemailMatcher}),
+            
+            phone:"",//default value none as we are using 21.5 
+            notification:"email", //21.5 default value emial or text, 
+            //when user radio btn check to Text, prmopt to Phone Field
+            //its called run time validation 
+            rating:["",rattingRange],//21.6 Running Function to rating for validation
+            rating2:["",rattingRange2(20,30)],//21.9 passing min,max value(param) making generic
+            sendCatalog:'', //21.2
+            addresses: this.RajFormBuilder.array([this.buildAddress()]) //22.1
+        });
+    
+        ///////22.3
+        const emailControl = this.RajcustomerForm.get('RajEmailGroup.Email');
+        emailControl.valueChanges.pipe(debounceTime(800)).subscribe(value =>
+            this.setMessage(emailControl));
+
+        this.RajcustomerForm.get('sendCatalog').valueChanges //22.2
+                            .subscribe(value => this.showAddress= value)
+
+        //21.11 removing click functanality from HTML by adding follwing on fire
+        this.RajcustomerForm.get('notification').valueChanges
+            .subscribe(value => this.RajSetNotification(value)) //gettign value from 21.5
+            //using .subs to pass the value to our function
+    }
+
+    ///////22.3
+    setMessage(c:AbstractControl):void{ //22.3
+        this.emailMessage="";
+        if((c.touched||c.dirty) && c.errors){
+            this.emailMessage = Object.keys(c.errors).map(key =>
+                this.validationMessage[key]).join(' ');
+        }
+    }
+   
+    buildAddress(): FormGroup{  //22.1
+        return this.RajFormBuilder.group({
+            addressType:'home',
+            street1:'',
+            street2:'',
+            city:'',
+            zip:''
+        })
+    }
+    addAddress(): void{  //22.1
+        this.addresses.push(this.buildAddress())
+    }
 
     
+    //21.5 RunTime Validation, when Radio btn check text, prompt to Phone Input Field
+    RajSetNotification(Rajnotify:string):void{
+        const phoneControl = this.RajcustomerForm.get('phone');
+        //variable = get value from the form input field phone, 
+        if(Rajnotify === "text"){ //if radio btn is text then do this
+            phoneControl.setValidators([Validators.required,Validators.maxLength(10)])
+            //setting validator to required and maxLength    
+        }else{ 
+            phoneControl.clearValidators();
+            //else radio button is not text then clear the validators 
+        } 
+        phoneControl.updateValueAndValidity();
+        //update value & Validty() to our logic if else(email or text click)    
+    }
+
+    //using this click method to auto populate data in the form fileds  
+    autoPopulateData():void{
+        //.setValue(all field need) vs. .patchValue (singal fild okay)
+        this.RajcustomerForm.patchValue({ //.patchValue okay with 1 value
+            phone:'908-903-0001',//it can auto fill one value   
+            
+        /*this.RajcustomerForm.setValue({ //.setValue required all the filed
+            firstName:'Rajiv', //when you remove one filed 
+            lastName:'Patel', //then this function not work
+            phone:'908-903-0001'//try it out   
+        */     
+        })
+    }
+            save(){
+                console.log(this.RajcustomerForm);
+                console.log('Saved: ' + JSON.stringify(this.RajcustomerForm.value));
+            }  
+}
+
+/*
+Angular Six Inbuilt Class, Every Inputbox associated with this six classes 
+ng-untouched   //we have to trage with input name #myfirstname
+ng-pristine  //pure default value did not changed, as you type it will chagne to ng-dirty
+ng-valid    //place required in input box and user will be prompt to type 
+ng-touched //input box touch but did not change value 
+ng-dirty  //default value changed and its dirty and will not comeback to pristin
+ng-invalid
+
+*/
