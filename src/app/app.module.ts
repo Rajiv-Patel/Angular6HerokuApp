@@ -23,6 +23,8 @@ import { MovieComponent } from './entertainment/movie/movie.component';
 import { MovieService } from './entertainment/movie/movie.service';
 // import { MovieService } from './entertainment/movies/movie.service';
 // import { MovieComponent } from './entertainment/movies/movies.component';
+import {HashLocationStrategy, Location, LocationStrategy} from '@angular/common';
+
 
 
 @NgModule({
@@ -74,8 +76,9 @@ bootstrap: [
 providers:[
   RajFormPostData,
   MovieService,
-  musicService
+  musicService,
   //RouterGaurds
+  [Location, {provide: LocationStrategy, useClass: HashLocationStrategy}]
 ]
 })
 export class AppModule { }
