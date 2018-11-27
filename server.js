@@ -5,8 +5,14 @@ const path = require('path');
 
 const app = express();
 
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static('./dist/firstapp'));
+}
+
 // Serve only the static files form the dist directory
-app.use(express.static('./dist/firstapp'));
+
+//app.use(express.static('./dist/firstapp'));
+
 // app.use(express.static(__dirname + '/dist/<RajApp-Comp>'));
 
 // app.get('/*', function(req,res) {    
