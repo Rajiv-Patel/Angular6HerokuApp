@@ -3,9 +3,12 @@ import {Injectable} from '@angular/core';
 import{Http,Headers,Response,RequestOptions} from '@angular/http'; //we need http in our main app module also 
 import { EmployeeForOrderForm} from '../models/employee.inteface-models'; //our data type for form
 //import {Observable} from 'rxjs/Observable'; //20.1.5
-import { Observable } from 'rxjs/Rx'; //20.1.5
+//import { Observable } from 'rxjs/rx'; //20.1.5
 //import {map} from 'rxjs/operators';
-import 'rxjs/rx'; //RX will get .map,.catch 
+//import 'rxjs/rx'; //RX will get .map,.catch 
+import 'rxjs/Rx';
+import { map } from "rxjs/operators";
+import { Observable } from 'rxjs/Observable';
 
 
 @Injectable()
