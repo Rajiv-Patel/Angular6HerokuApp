@@ -53,11 +53,11 @@ export class RajFormPostData{  //declar into product mod.
 
         //http call using .post(URL,body(data),Options ) 
         //makeLinkToAccess?id to use direct ID to work with data
-        return this.http.post('http://localhost:3100/makeLinkToAccess',body,options) // Access/${id}',body
+        return this.http.post('http://localhost:3100/makeLinkToAccess',body,options).map(this.extractData).catch(this.handleError) // Access/${id}',body
         //you can use http.delete, http.add more options to paly with API
 
-        .map(this.extractData)  //20.1.6
-        .catch(this.handleError)  //20.1.7
+          //20.1.6
+          //20.1.7
         }
 }
 
