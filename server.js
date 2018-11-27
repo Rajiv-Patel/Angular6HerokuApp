@@ -2,7 +2,7 @@
 //Install express server
 const express = require('express');
 const path = require('path');
-const routes = require("./routes");
+//const routes = require("./routes");
 const app = express();
 
 
@@ -10,7 +10,7 @@ const app = express();
 // Serve only the static files form the dist directory
 app.use(express.static('./dist/firstapp'));
 // app.use(express.static(__dirname + '/dist/<RajApp-Comp>'));
-app.use("/api",routes);
+//app.use("/",routes);
 
 // app.get('/*', function(req,res) {    
 // res.sendFile(path.join(__dirname+'/dist/<RajApp-Comp>/index.html'));
