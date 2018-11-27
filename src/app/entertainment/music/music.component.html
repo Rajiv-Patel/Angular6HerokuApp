@@ -1,0 +1,123 @@
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+<div class="panel-body">
+  
+<!-- Loop Running Multipal times, how to make local array and API array pull as one loop? -->
+<div class="row col-md-12">
+ <div class="panel panel-primary"><b>{{Musictitle3}}</b><div class="panel-body">
+  <div class="panel-responsive">
+   <div class="column">
+    <!--For Loop # 1 -->
+    <div *ngFor="let artistImg of URL;  let i = index"><!--Pulling Local Array Images URL-->
+     {{i + 1}}                                                
+     <img src={{artistImg.imageUrl}} class="w3-bar-item w3-circle w3-hide-small" style="width:195px"/>                        
+     <br><br>
+       <!--Artist Album Data Pulling From API Link Array -->
+       <span *ngFor="let musc of Music3[0].artists">
+         <h6><!--Artists is the first array in the API-->
+         <b>ID:</b>{{ musc.id}}<BR>
+         <b>Name:</b>{{ musc.name}}<BR>
+         <b>Cover:</b>{{ musc.cover}}<BR>
+         <b>Bio:</b>{{ musc.bio}}<BR>
+         <!--Pullling Array of Array -->
+         <span *ngFor="let ArtistAlbm of Music3[0].artists[musc.id-1].albums">
+                 <!-- Each artists has Albums array, -->
+         <B>Album:</B>{{ ArtistAlbm.albumId}}<BR>
+         <B>Title:</B> {{ArtistAlbm.title}}<BR>
+         <B>Year:</B> {{ArtistAlbm.year}}<BR>
+         <B>Cover: </B>{{ArtistAlbm.cover}}<BR>
+         <B>Price: </B>{{ArtistAlbm.price}}<BR>
+         </span></h6>
+       <B>Genre:</B>{{ musc.genre}}<BR><BR>        
+       </span>
+     </div>
+    </div>          
+   </div>
+  </div>
+</div>
+           
+           
+           
+  
+  
+<div class="row col-md-12">
+        <div class="container">
+        <span *ngFor="let musc of Music3[0].artists" >
+                <h6>
+                <b>ID:</b>{{ musc.id}}<BR>
+                <b>Name:</b>{{ musc.name}}<BR>
+                <b>Cover:</b>{{ musc.cover}}<BR>
+                <b>Bio:</b>{{ musc.bio}}<BR></h6>
+        <H6><span *ngFor="let ArtistAlbm of Music3[0].artists[musc.id-1].albums">
+                        <B>Album:</B>{{ ArtistAlbm.albumId}}<BR>
+                        <B>Title:</B> {{ArtistAlbm.title}}<BR>
+                        <B>Year:</B> {{ArtistAlbm.year}}<BR>
+                        <B>Cover: </B>{{ArtistAlbm.cover}}<BR>
+                        <B>Price: </B>{{ArtistAlbm.price}}<BR>
+            </span></H6>
+                <B>Genre:</B>{{ musc.genre}}<BR><BR>        
+        </span>            
+        </div>
+    </div>
+  </div>
+
+<div class="row col-md-12">
+  <div class="panel panel-primary"><b>{{Musictitle3}}</b><div class="panel-body">
+    <div class="panel-responsive">
+      <div class="column">
+       <table style="table-layout: fixed; width: 100%"><tr>
+               <td colspan="2" style="table-layout: fixed; width: 30%">
+                        <div *ngFor="let artistImg of URL">                                                
+                        <img [src]="artistImg.imageUrl" class="w3-bar-item w3-circle w3-hide-small" style="width:195px"/>                        
+                        <br><br></div>
+               </td>
+               <td colspan="2" style="table-layout: fixed; width: 70%">rajvi
+                        <div class="container table-responsive" >
+                        <span *ngFor="let musc of Music3[0].artists" >
+                                <h6>
+                                <b>ID:</b>{{ musc.id}}<BR>
+                                <b>Name:</b>{{ musc.name}}<BR>
+                                <b>Cover:</b>{{ musc.cover}}<BR>
+                                <b>Bio:</b>{{ musc.bio}}<BR></h6>
+                        <H6><span *ngFor="let ArtistAlbm of Music3[0].artists[musc.id-1].albums">
+                                        <B>Album:</B>{{ ArtistAlbm.albumId}}<BR>
+                                        <B>Title:</B> {{ArtistAlbm.title}}<BR>
+                                        <B>Year:</B> {{ArtistAlbm.year}}<BR>
+                                        <B>Cover: </B>{{ArtistAlbm.cover}}<BR>
+                                        <B>Price: </B>{{ArtistAlbm.price}}<BR>
+                        </span></H6>
+                                <B>Genre:</B>{{ musc.genre}}<BR><BR>        
+                        </span>                    
+                        </div>        
+                </td>
+        </tr></table>                                     
+      </div>          
+    </div>
+  </div>
+</div>
+
+<!--ahanda205@gmail.com -->
+
+
+
+
+
+                                    
+                                      <!-- <div class="container table-responsive" >
+                                      <span *ngFor="let musc of Music3[0].artists" class="tooltiptext">
+                                              <h6>
+                                              <b>ID:</b>{{ musc.id}}<BR>
+                                              <b>Name:</b>{{ musc.name}}<BR>
+                                              <b>Cover:</b>{{ musc.cover}}<BR>
+                                              <b>Bio:</b>{{ musc.bio}}<BR></h6>
+                                      <H6><span *ngFor="let ArtistAlbm of Music3[0].artists[musc.id-1].albums">
+                                                      <B>Album:</B>{{ ArtistAlbm.albumId}}<BR>
+                                                      <B>Title:</B> {{ArtistAlbm.title}}<BR>
+                                                      <B>Year:</B> {{ArtistAlbm.year}}<BR>
+                                                      <B>Cover: </B>{{ArtistAlbm.cover}}<BR>
+                                                      <B>Price: </B>{{ArtistAlbm.price}}<BR>
+                                      </span></H6>
+                                              <B>Genre:</B>{{ musc.genre}}<BR><BR>        
+                                      </span>                    
+                                      </div>                               -->

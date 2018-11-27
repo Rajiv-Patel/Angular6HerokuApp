@@ -1,0 +1,211 @@
+
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        {{ title }}
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-2">
+                Filter By:
+            </div>
+            <div class="col-md-7">
+                <!-- Two Way Data Binding Using ngModel [()], geint input and assigne to variable-->
+                <input type="text" [(ngModel)]="filterText"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <!--Single Way Data Bining Using Variable From Component.ts file-->
+                <h5>Number Of Product Filtered: {{filterText}}</h5>
+            </div>
+        </div>
+        {{ showImage }}
+        <div class="table-responsive" >
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            <button type="button" 
+                                    class="btn btn-success"
+                                    (click)="toggleImage()">
+                                Show Image
+                            </button>
+                        </th>
+                        <th>Name</th>
+                        <th>Code</th>
+                        <th>Date</th>
+                        <th>Price</th>
+                        <th>Star Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--Using For Loop *ngFor-->
+                    <tr *ngFor="let prod of products">
+                        <td>
+                            <img [src]="prod.imageUrl"  *ngIf="showImage" [style.width.px]="imageWidth"/>
+                        </td>
+                        <td>{{prod.productName | myupper:'upper' }}</td><!--2. if === upper-->
+                        <td>{{prod.productCode | myupper:'lower' }}</td><!--2. return else -->
+                        <!--<td>{{prod.productName | myupper }}</td> 1. Using custom pipe uppercase-->
+                        <!--<td>{{prod.productName | uppercase }}</td> Using Pipe & uppercase-->
+                        <!--<td>{{prod.productCode | lowercase }}</td>Using Pipe & lowercase-->
+                        <td>{{prod.releaseDate }}</td>
+                        <!-- Define the 5. Conditional CSS  If Price is less then $20 show green else oragne color-->
+                        <td [ngStyle]="{'background-color':prod.price<20 ? 'green':'orange'}">Orignal Price {{prod.price | currency:'GBP' }}<BR>After Discont {{prod.price | discountPipe:6 | currency:'GBP'}}</td>
+                        <!--<td>{{prod.price | currency}}</td>Defualt US $-->
+                        <!--<td>{{prod.price | currency:'GBP' }}</td>UK £-->
+                        <!--<td>{{prod.price | currency:'INR' }}</td> IND ₹-->
+                        <td>{{prod.starRating}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Start Using Interface RajIproduct Model -->
+<div class="panel panel-danger">
+        <div class="panel-heading">
+            {{ title2 }}
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-7" id="FilterBy">
+                    <!-- Two Way Data Binding Using ngModel [()], geting input and assigne to variable-->
+                    Filter By: <input type="text" [(ngModel)]="filterText2"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <!--Single Way Data Bining Using Variable From Component.ts file-->
+                    <h5>Number Of Product Filtered: {{ (products2 | PipeNamefiltered:filterText2)?.length}}</h5>
+                </div>
+            </div>
+
+            <div class="table-responsive" >
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <button type="button" 
+                                        class="btn btn-success"
+                                        (click)="toggleImage2()">
+                                    Show Image
+                                </button>
+                            </th>
+                            <th>Name</th>
+                            <th>Code</th>
+                            <th>Date</th>
+                            <th>Price</th>
+                            <th>Star Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--Using For Loop *ngFor-->
+                        <tr *ngFor="let prod of products2 | PipeNamefiltered:filterText2">
+                            <td>
+                                <img [src]="prod.imageUrl"  *ngIf="showImage2" [style.width.px]="imageWidth"/>
+                            </td>
+                            <td>{{prod.productName | myupper:'upper' }}</td><!--2. if === upper-->
+                            <td>{{prod.productCode | myupper:'lower' }}</td><!--2. return else -->
+                            <!--<td>{{prod.productName | myupper }}</td> 1. Using custom pipe uppercase-->
+                            <!--<td>{{prod.productName | uppercase }}</td> Using Pipe & uppercase-->
+                            <!--<td>{{prod.productCode | lowercase }}</td>Using Pipe & lowercase-->
+                            <td>{{prod.releaseDate }}</td>
+                            <!-- Define the 5. Conditional CSS  If Price is less then $10 show green else oragne color-->
+                            <td [ngStyle]="{'background-color':prod.price<=10 ? 'lightgreen':'lightblue'}">Orignal Price {{prod.price | currency:'GBP' }}<BR>After Discont {{prod.price | discountPipe:6.2 | currency:'GBP'}}</td>
+                            <!--<td>{{prod.price | currency}}</td>Defualt US $-->
+                            <!--<td>{{prod.price | currency:'GBP' }}</td>UK £-->
+                            <!--<td>{{prod.price | currency:'INR' }}</td> IND ₹-->
+                            <!-- <td>{{prod.starRating}}</td> -->
+                            <!--Using star-comp and inputing rating -->
+                            <td><app-star-component [rating]="prod.starRating"
+                                (ratingClicked)="onDataRecive($event)"></app-star-component></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<!-- End Using Interface RajIproduct Model -->
+
+<!-- Start Using Database API Link RajIproduct Model -->
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        {{ title3 }}
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-7" id="FilterBy">
+                <!-- Two Way Data Binding Using ngModel [()], geting input and assigne to variable-->
+                Filter By: <input type="text" [(ngModel)]="RajfilterText3"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <!--Single Way Data Bining Using Variable From Component.ts file-->
+                <h5>Number Of Product Filtered: {{ (products3 | PipeNamefiltered:RajfilterText3)?.length}}</h5>
+            </div>
+        </div>
+
+        <div class="table-responsive" >
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            <button type="button" 
+                                    class="btn btn-success"
+                                    (click)="toggleImage3()">
+                                Show Image
+                            </button>
+                        </th>
+                        <th>Name</th>
+                        <th>Code</th>
+                        <th>Date</th>
+                        <th>Price</th>
+                        <th>Star Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--Using For Loop *ngFor-->
+                    <tr *ngFor="let prod of products3 | PipeNamefiltered:RajfilterText3">
+                        <td>
+                            <img [src]="prod.imageUrl"  *ngIf="showImage3" [style.width.px]="imageWidth"/>
+                        </td>
+                        <td style="color:palevioletred">
+                                <a [routerLink]="['/products',prod.productId]">
+                                    {{prod.productName | myupper:'upper'}} <!--2. if === upper-->
+                                </a>
+                        </td>
+                        <td>{{prod.productCode | myupper:'lower' }}</td><!--2. return else -->
+                        <!--<td>{{prod.productName | myupper }}</td> 1. Using custom pipe uppercase-->
+                        <!--<td>{{prod.productName | uppercase }}</td> Using Pipe & uppercase-->
+                        <!--<td>{{prod.productCode | lowercase }}</td>Using Pipe & lowercase-->
+                        <td>{{prod.releaseDate }}</td>
+                        <!-- Define the 5. Conditional CSS  If Price is less then $10 show green else oragne color-->
+                        <td [ngStyle]="{'background-color':prod.price<=10 ? 'lightgreen':'lightblue'}">Orignal Price {{prod.price | currency:'GBP' }}<BR>After Discont {{prod.price | discountPipe:6.2 | currency:'GBP'}}</td>
+                        <!--<td>{{prod.price | currency}}</td>Defualt US $-->
+                        <!--<td>{{prod.price | currency:'GBP' }}</td>UK £-->
+                        <!--<td>{{prod.price | currency:'INR' }}</td> IND ₹-->
+                        <!-- <td>{{prod.starRating}}</td> -->
+                        <!--Using star-comp and inputing rating -->
+                        <td>
+                            <app-star-component [rating]="prod.starRating"
+                            (ratingClicked)="onDataRecive3($event)"></app-star-component>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- End Using Database API Link RajIproduct Model -->
+
+

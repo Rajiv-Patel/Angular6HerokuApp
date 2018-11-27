@@ -1,0 +1,33 @@
+<!-- Loop Running Multipal times, how to make local array and API array pull as one loop? -->
+<div class="row col-md-12">
+    <div class="panel panel-primary"><b>{{Musictitle3}}</b><div class="panel-body">
+     <div class="panel-responsive">
+      <div class="column">
+       <!--For Loop # 1 -->
+       <div *ngFor="let artistImg of URL;  let i = index"><!--Pulling Local Array Images URL-->
+        {{i + 1}}                                                
+        <img src={{artistImg.imageUrl}} class="w3-bar-item w3-circle w3-hide-small" style="width:195px"/>                        
+        <br><br>
+          <!--Artist Album Data Pulling From API Link Array -->
+          <span *ngFor="let musc of Music3[0].artists">
+            <h6><!--Artists is the first array in the API-->
+            <b>ID:</b>{{ musc.id}}<BR>
+            <b>Name:</b>{{ musc.name}}<BR>
+            <b>Cover:</b>{{ musc.cover}}<BR>
+            <b>Bio:</b>{{ musc.bio}}<BR>
+            <!--Pullling Array of Array -->
+            <span *ngFor="let ArtistAlbm of Music3[0].artists[musc.id-1].albums">
+                    <!-- Each artists has Albums array, -->
+            <B>Album:</B>{{ ArtistAlbm.albumId}}<BR>
+            <B>Title:</B> {{ArtistAlbm.title}}<BR>
+            <B>Year:</B> {{ArtistAlbm.year}}<BR>
+            <B>Cover: </B>{{ArtistAlbm.cover}}<BR>
+            <B>Price: </B>{{ArtistAlbm.price}}<BR>
+            </span></h6>
+          <B>Genre:</B>{{ musc.genre}}<BR><BR>        
+          </span>
+        </div>
+       </div>          
+      </div>
+     </div>
+   </div>

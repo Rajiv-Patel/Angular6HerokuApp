@@ -1,0 +1,16 @@
+thead{
+    color:purple; 
+    font-weight:bold;
+}
+
+h5{
+    color:olivedrab;
+    text-align: left;
+    text-shadow: 1em;
+    font-weight: bold;
+}
+
+#FilterBy {
+    text-align: left;
+    font-weight: bold;
+}

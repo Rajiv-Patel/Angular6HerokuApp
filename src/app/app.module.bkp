@@ -1,0 +1,78 @@
+import { NgModule } from '@angular/core';    
+import { BrowserModule } from '@angular/platform-browser'; 
+import { FormsModule} from '@angular/forms';  
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/Router';
+
+//importing class from our created xyz.component.ts pages. 
+import { MainAppComponent } from './app.component'; //app.comp.ts >> Main 1st AppComponent
+import { FirstClassCompbyRaj } from './myFirst.component'; //myFirst.comp.ts >> Sub 2nd Component
+import { ProductComponent } from './products/product.component'; //product component 
+
+//importing Pipe | Filtering Functions
+import { MyUpperPipe } from './products/myUpper.pipe';
+import { DiscountPipe } from './products/discountPrice.pipe';
+import { FilterProductPipe } from './products/filterProduct.pipe';
+import { SharedStarComponent } from './shared/star.component';
+import { ProductService } from './products/product.service';
+import { movieService } from './movies/movie.service';
+
+import { NotFoundComponent } from './shared/notFound.component';
+import { OrderComponent } from './orders/order.component';
+import { MoviesComponent } from './movies/movies.component';
+import { HomeComponent } from './home/home.component';
+import { ProductDetailComponent } from './products/detail/productDetail.component';
+import { RouterGaurds } from './products/router.gaurd';
+
+
+@NgModule({
+imports: [
+BrowserModule, //Must need to render HTML page on window, 
+//if you remove BrowserModule, then no compiling error but no content show    
+FormsModule,
+HttpModule,
+HttpClientModule,
+RouterModule.forRoot([
+
+  {path: 'products', component: ProductComponent},
+  {path: 'products/:id', canActivate:[RouterGaurds], component: ProductDetailComponent},
+  {path: 'orders', component: OrderComponent},
+  {path: 'home', component: HomeComponent},
+  {path: 'movies', component: MoviesComponent},
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: '**', component: NotFoundComponent}
+])
+],
+
+declarations: [    
+  MainAppComponent, //app.comp.ts >> Main 1st AppComponent 
+  FirstClassCompbyRaj,  //myFirst.comp.ts >> Sub 2nd Component          
+  ProductComponent,  //product Component 
+
+  //Imported Pipe | Filtering Functions
+  MyUpperPipe,
+  DiscountPipe,
+  FilterProductPipe,
+
+  //Import Star Compo
+  SharedStarComponent,
+  NotFoundComponent,
+  OrderComponent,
+  MoviesComponent,
+  HomeComponent,
+  ProductDetailComponent
+],  
+
+bootstrap: [
+  MainAppComponent //class contains selectors for other Component files
+  //such as for calss FirstClassCompbyRaj has 'myFirstComponent' selector
+], 
+//All Services
+providers:[
+  ProductService,
+  movieService,
+  RouterGaurds
+]
+})
+export class MainRajivAppModule { }

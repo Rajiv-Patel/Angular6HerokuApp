@@ -1,0 +1,235 @@
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+<div class="panel-body">
+<div class="row col-md-12">
+        <div class="w3-quarter text-left row col-md-4">
+            <span *ngFor="let move of movies3; let i = index" (mouseover)="onSelect(movies3[i])" font-family="Ubuntu">
+                    {{ i + 1 }} - {{ move.name }}<BR>                        
+                    </span>            
+        </div>
+        <div class="w3-quarter">
+                <div *ngIf="selectMovies; else infoText" class="w3-padding-35">
+                        <img [src]="selectMovies.imageUrl" style="width:55%; height:55%;"/>
+                        <hr>
+                        <div><h4><b>{{selectMovies.name}}</b></h4></div>
+                        <div><h6><b>{{selectMovies.rate}}</b></h6></div>
+
+                        <!-- <app-star-component [rate]="move.rate"
+                            (ratingClickedMovie)="onDatamovie($event)"></app-star-component> -->
+
+                        <!-- <app-star-component [rating]="prod.starRating"
+                           (ratingClicked)="onDataRecive3($event)"></app-star-component> -->
+
+                        <div>{{selectMovies.language}}</div>
+                        <div>{{selectMovies.type}}</div>
+                    </div>
+        </div>
+    </div>
+  </div>
+    
+<div class="row col-md-12">
+    <div class="panel panel-primary">
+        <b>{{Movietitle3}}</b>    
+    <div class="panel-body">
+        <div class="panel-responsive">
+            <div class="column">
+                
+                <div style="background-color: aliceblue" *ngFor="let move of movies3; let i = index" (click)="onSelect(movies3[i])">
+                    <ul class="w3-ul w3-card-4">
+                        <li class="w3-bar">  
+                               <img [src]="move.imageUrl" class="w3-bar-item w3-circle w3-hide-small" style="width:95px" />                                            
+                                <div class="w3-bar-item">
+                                    <span class="w3-large"><b>{{move.name}}</b></span><br>
+                                    <span class="w3-large"><b>{{move.language}}</b></span>
+                                </div>
+                        </li>                    
+                    </ul>         
+                </div>
+            </div>
+
+            <div class="column">                   
+                <div *ngIf="selectMovies; else infoText">
+                    <img [src]="selectMovies.imageUrl" style="width:35%; height:35%;"/>
+                    <hr>
+                    <div>{{selectMovies.name}}</div>
+                    <div>{{selectMovies.rate}}</div>
+                    <div>{{selectMovies.language}}</div>
+                    <div>{{selectMovies.type}}</div>
+                </div>
+                <ng-template #infoText>
+                        <p>Select a Movie</p>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div></div>
+
+<BR><BR><BR><BR><BR>
+
+https://scotch.io/tutorials/responsive-carousel-component-with-angular-2 
+
+      <ul> 
+        <li *ngFor="let move of movies3; let i = index"> 
+          {{ i + 1 }} - {{ move.name }} 
+        </li>
+      </ul>
+
+        <!-- <div *ngFor="let move of movies3; let i = index">
+                {{i+1}}-{{move.name}} <BR><img class="card-img-top img-fluid" [src]="move.imageUrl" [style.width.px]="imageWidthMovie2" alt="Card image"/>
+        </div> -->
+
+<BR><BR><BR><BR><BR>
+
+    <!-- <div class="panel panel-primary"> -->
+            <div class="row">
+                    <div class="card " style="width:250px;margin-left:10%;margin-top:4%"  *ngFor="let move of movies3">
+                            <!-- <img class="card-img-top img-fluid" [src]="move.imageUrl" alt="Card image"> -->
+
+                            <img class="card-img-top img-fluid" [src]="move.imageUrl" [style.width.px]="imageWidthMovie2" alt="Card image"/>
+                            <div class="card-body">
+                            <h4 class="card-title">{{move.name}}</h4>
+                            <p class="card-text">{{move.language}}</p>
+                            <!-- <star-app [rating]="movie.rate"></star-app> -->
+                           
+                            <!-- Button to Open the Modal -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal" 
+                            [attr.data-target]="'#' + move._id" >
+                                    Details
+                            </button>
+                                
+                                <!-- The Modal -->
+                                <div class="modal fade" id="{{move._id}}">
+                                    <div class="modal-dialog">
+                                    <div class="modal-content">
+                                
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                        <h4 class="modal-title">{{move.name}}</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                            <p>{{move.language}}</p>
+                                            <p>{{move.type}}</p>
+                                            
+                                        </div>
+                                
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        </div>                                
+                                    </div>
+                                    </div>
+                                </div>
+                    </div>
+                </div>
+<BR><BR><BR>
+
+
+<!--
+                               <div >
+                                        <div style="background-color:white"  *ngFor="let artist of movie.artists ; let i = index" (click)="setClickedRow(i)" (click)="onSelect(artist)" [class.active]="i == selectedRow">
+                                             <ul class="w3-ul w3-card-4">
+                                                     <li class="w3-bar">                                              
+                                                       <img src="src/Images/covers/{{artist.cover}}.jpg"class="w3-bar-item w3-circle w3-hide-small" style="width:95px"/>
+                                                       <div class="w3-bar-item">
+                                                         <span class="w3-large"><b>{{artist.name  | titlecase}}</b></span><br>
+                                                         <span> {{artist.bio  | titlecase}}</span>
+                                                       </div>
+                                                     </li>                     
+                           
+                                             </ul>                   
+                                        </div>
+                                </div> 
+   
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <table width="800">
+                    <tr>
+                      <th class="text-center"><B style="color:palevioletred">{{ Movietitle3 }}</B>
+                        </th>
+                    </tr>
+                    <tr>
+    <td>
+            <div>
+                    <!-- <div class="panel-heading text-center">
+                        <B style="color:palevioletred">{{ Movietitle3 }}</B>
+                    </div> -->
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-7" id="FilterBy">
+                                <!-- Two Way Data Binding Using ngModel [()], geting input and assigne to variable-->
+                                <!-- Filter By: <input type="text" [(ngModel)]="filterText3"/> -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!--Single Way Data Bining Using Variable From Component.ts file-->
+                                
+                            </div>
+                        </div>
+                
+                        <div class="table-responsive" >
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Movie Name</th>
+                                        <th>Language</th>
+                                        <th>Rating</th>
+                                        <th>Type</th>
+                                        <th>Image</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!--Using For Loop *ngFor-->
+                                    <tr *ngFor="let move of movies3 ">
+                                        <!-- <td style="color:palevioletred"><B>{{move.name | myupper:'upper'}}</B></td> -->
+                                        <td style="color:palevioletred"><B>{{move.name}}</B></td>
+                                        <td>{{move.language}}</td>
+                                        <td>{{move.rate }}</td>
+                                        <td>{{move.type }}</td>
+                                        <td><!--{{move.imageUrl}}-->
+                                                <img [src]="move.imageUrl" [style.width.px]="imageWidthMovie"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+    </td>
+                    </tr>
+                  </table>
+        

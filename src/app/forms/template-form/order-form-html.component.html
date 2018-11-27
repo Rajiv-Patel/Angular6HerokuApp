@@ -1,0 +1,124 @@
+
+        <div class='panel panel-success'>
+            <div class='panel-heading'>{{title}}: Run Port:3100 to Receive Post (user data)</div>            
+                <!--<div class='row'><div class='col-md-6'><h4 id="h4first">Fill Out Order:</h4></div></div>--> 
+                <div class='col-md-12 row center-block '>
+                    <div class='panel-body col-md-10 row center-block'>
+                        <!-- Anug-->
+                        <!-- //18. Creating HTML form and Using Angular Property to Display -->
+                        <!-- <form #form="ngForm" name="mytempform" novalidate ng-submit="mytempform.$valid && (submit)="RajsubmitForm(form)"> -->
+                        <!--<form #form="ngForm" novalidate (submit)="RajsubmitForm(form)"> -->
+                        <form #form="ngForm" novalidate (submit)="RajsubmitForm(form)">
+                        <!-- //20.1.3 write event call (submit)= Mymethod(holds all form data) -->
+                        <fieldset>
+                            <!-- 18.9 [class.has-error] ="myfirstname.invalid" -->
+                        <div class="form-group" [class.has-error] ="myfirstname.invalid">
+                        <!-- Using label for="" and id="" with input we create onfocus when click on First Name-->
+                        <!-- 18.7 Input Filed, Using Angular Class to Validate and send msg to user-->
+                        <!-- 18.9.1 class="control-label" -->
+                        <label class="control-label" for="myfirstname">First Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Is class (ng-invalid) is true or  false? Answer is :{{myfirstname.invalid}}   </label>
+                        
+                        <!-- 18.5 <input [ngModel] = "RajmodelForm.myfirstname" (ngModelChange) = "RajfirstToUpper($event)" -->
+                        <!-- 18.4 [(ngModel)] = "RajmodelForm.firstname" -->
+                        <input [ngModel] = "RajmodelForm.myfirstname" (ngModelChange) = "RajfirstToUpper($event)" 
+                        #myfirstname="ngModel" required class="form-control" type="text" id="myfirstname" placeholder="Firstname" name="myfirstname">
+                        <!-- 18.8 Input filed requerd ourlogic is: *ngIf="myfirstname.invalid"-->
+                        <div class="alert alert-danger" *ngIf="myfirstname.invalid">
+                                First Name is Required by User
+                        </div></div>
+                    
+
+                        <!--18.6 #mylasttname in input box and  {{mylastname.className}}-->
+                        <!--18.6.1 required in input box, below <h5> ng-valid will chage to ng-invalid-->
+                        <!-- form classes are form-control, ng-untouched, ng-pristine, ng-valid, -->
+                        <!-- 19.1 minlenght validation-->
+                        <div class="form-group" [class.has-error] ="mylastname.invalid" ><!--Using form-group and form-control for decoration inputfield-->
+                        <label class="control-label" for="mylastname">Last Name:</label>
+                        <input [(ngModel)] = "RajmodelForm.mylastname" minlength="3" #mylastname="ngModel" 
+                        class="form-control" type="text" id="mylastname" placeholder="Lastname" name="mylastname">
+                        <!-- Out of six class we are asking if field is Invalid?-->
+                        <div class="alert alert-danger" *ngIf="mylastname.invalid">
+                                Last Name min length is 3
+                            </div>
+                        <h5 class="control-label" for="mylastname" >Is Last Name Field InValid? True or False: {{mylastname.invalid}}</h5>
+                        
+                        </div><!-- 18.4 [(ngModel)] ="RajmodelForm.mylastname"  -->
+
+                        <!-- Phone Number Validation Using Regex Pattern="[number 0 to 9]{nine digit} " -->
+                        <div class="form-group" [class.has-error] ="phonenum.invalid" ><!--Using form-group and form-control for decoration inputfield-->
+                            <label class="control-label" for="phonenum">Enter Phone Number</label>
+                            <input [(ngModel)] = "RajmodelForm.phonenum" #phonenum="ngModel" 
+                            pattern="[0-9]{9}"
+                            class="form-control" type="text" id="phonenum" placeholder="Phone Number" name="phonenum">
+                            <div class="alert alert-danger" *ngIf="phonenum.invalid">
+                                Enter Nine Digit Phone Number 
+                            </div></div>
+
+                        <!-- Email ID Validation Using Regex Pattern="[Email RegEx Code]" -->
+                        <!-- Regular Expression (RegEx) for email http://regexlib.com/REDetails.aspx?regexp_id=711 -->
+                        <div class="form-group" [class.has-error] ="email.invalid" ><!--Using form-group and form-control for decoration inputfield-->
+                            <label class="control-label" for="email">Email ID</label>
+                            <input [(ngModel)] = "RajmodelForm.email" #email="ngModel" 
+                            pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"
+                            class="form-control" type="text" id="email" placeholder="Email ID" name="email">
+                            <div class="alert alert-danger" *ngIf="email.invalid">
+                                Enter Email Address 
+                            </div>
+                            </div>
+                          
+                        <!-- Password Strat -->
+                        <div class="form-group" [class.has-error] ="password.invalid && password.touched">
+                            <label class="control-label" for="password">Password</label>
+                            <input [(ngModel)] = "RajmodelForm.password" #password="ngModel" minlength="8"
+                            required class="form-control" type="password" id="password" placeholder="password" name="password">
+                            <div class="alert alert-danger" *ngIf="password.invalid && password.touched">
+                            Enter Password Minimum 8 Character 
+                            </div>
+                        </div>
+                         <!-- Password End -->
+                    
+                        <div class="checkbox"><label><input [(ngModel)] = "RajmodelForm.fulltime" type="checkbox" name="fulltime">FullTime</label></div>
+                        <div class="radio"><label><!-- make both name="gender" same so user can select only one-->
+                                    <input [(ngModel)] = "RajmodelForm.gender" type="radio" name="gender" value="male">Male<br>
+                                    <input [(ngModel)] = "RajmodelForm.gender" type="radio" name="gender" value="female">Female
+                                <!-- 18.4 [(ngModel)] = -->
+                                </label></div>
+                        <!-- //19.4 Option Selection using javascript blur method to validate
+                            // if user select wrong option, then red flag to select again, -->         
+                        <div class="form-group" [class.has-error]="hasCodelangError"><!-- 19.5 -->
+                            <label class="control-label" for="codelang" >Primary Lang</label>
+                            <select class="form-control" name="codelang" [(ngModel)] = "RajmodelForm.codelang"  
+                            (blur)="validateLang()"><!-- Blur 19.5 -->
+                                <!-- 18.4 [(ngModel)] =-->
+                                <!-- Statis Option as we type the value.
+                                <option> Angular </option>
+                                <option> NodeJS </option>
+                                -->
+                                <!-- 19.5 Custom Validation using blur, adding more to Angular classes-->
+                                <option value="default">Select Lang</option>
+
+                                <!-- 18.1 -->
+                                <option *ngFor="let lang of language">{{lang}} </option>                        
+                            </select>
+                            <div class="alert alert-danger" *ngIf="hasCodelangError">
+                                    Select Your Primary Language 
+                                </div>
+                        </div>
+                        <button class="btn btn-success" type="submit" [disabled]="!form.form.valid">Submit</button>
+                        <!-- Orignal <button class="btn btn-success" type="submit">Submit</button> -->
+                    </fieldset>
+                            </form>                                       
+                
+            
+            
+                    </div>
+                </div>
+        <!-- 18.4 Showing Data Array using | json only for showing purpose -->
+        </div><br>
+        <div class='col-md-12 row'>
+                <B>Dobble Way Data Binding, Changes on Default Array when User Input </B>
+                <h6>Stored Array "RajmodelForm[ ]": {{RajmodelForm | json}}</h6>  <!-- Showing Stored Array-->
+                <h5><b>Live User Input:</b>{{form.value | json}}</h5> <!-- User Input Data Show Line-->
+        </div><br>
+        
