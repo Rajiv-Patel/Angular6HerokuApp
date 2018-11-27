@@ -15,7 +15,7 @@ app.use(express.static('./dist/firstapp'));
 // app.get('/*', function(req,res) {    
 // res.sendFile(path.join(__dirname+'/dist/<RajApp-Comp>/index.html'));
 // });
-app.use('/api', routesApi);
+
 app.get('/*', function(req, res) {
   res.sendFile(path.join('./dist/firstapp/index.html'));
 });
