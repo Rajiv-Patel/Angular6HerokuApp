@@ -23,6 +23,7 @@ import { MovieComponent } from './entertainment/movie/movie.component';
 import { MovieService } from './entertainment/movie/movie.service';
 // import { MovieService } from './entertainment/movies/movie.service';
 // import { MovieComponent } from './entertainment/movies/movies.component';
+//Herokuapp Refresh Page Solution with  HashLocationStrategy, Location, LocationStrategy
 import {HashLocationStrategy, Location, LocationStrategy} from '@angular/common';
 
 
@@ -78,6 +79,7 @@ providers:[
   MovieService,
   musicService,
   //RouterGaurds
+ //Herokuapp Refresh Page Solution with  HashLocationStrategy,
   [Location, {provide: LocationStrategy, useClass: HashLocationStrategy}]
 ]
 })
